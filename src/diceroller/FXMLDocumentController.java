@@ -46,44 +46,34 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void roll(ActionEvent event) {
         if (normal.isSelected()) {
-            historyBox.appendText("------");
             roll();
-            historyBox.appendText("------");
-            historyBox.appendText("\n");
-            
 
         } else if (advantage.isSelected()) {
-            String mod = dMod.getValue().toString();
             historyBox.appendText("Rolling with ADV! \n");
-            historyBox.appendText("Modifier = " + mod + "\n");
             int firstroll = roll();
             int secondroll = roll();
             //reports
             if (firstroll > secondroll) {
-                historyBox.appendText("First wins with: " +firstroll+ "\n \n");
+                historyBox.appendText("First wins with: " + firstroll + "\n");
             } else {
-                historyBox.appendText("Second wins with: " +secondroll+ "\n \n");
+                historyBox.appendText("Second wins with: " + secondroll + "\n");
             }
         } else if (disadvantage.isSelected()) {
-           
-            String mod = dMod.getValue().toString();
             historyBox.appendText("Rolling with DADV! \n");
-            historyBox.appendText("Modifier = " + mod + "\n");
             int firstroll = roll();
-            int secondroll = roll();    
+            int secondroll = roll();
             //report
             if (firstroll < secondroll) {
-                historyBox.appendText("First wins with: " +firstroll+ "\n \n");
+                historyBox.appendText("First wins with: " + firstroll + "\n");
             } else {
-                historyBox.appendText("Second wins with: " +secondroll+ "\n \n");
+                historyBox.appendText("Second wins with: " + secondroll + "\n");
             }
         }
-
+        historyBox.appendText("------ \n");
     }
 
     public int roll() {
         int roll;
-        int result;
         // Pull info from UI
         String maxString = dtype.getValue().toString();
         String dAmount = damount.getValue().toString();
