@@ -2,7 +2,6 @@ package diceroller;
 
 import java.net.URL;
 import java.security.SecureRandom;
-import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
