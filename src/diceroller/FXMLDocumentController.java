@@ -46,73 +46,58 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void roll(ActionEvent event) {
         if (normal.isSelected()) {
-            String maxString = dtype.getValue().toString();
-            maxString = maxString.substring(1);
-            int max = Integer.parseInt(maxString);
-            max = max * Integer.parseInt(damount.getValue().toString());
-            int resultint = rand.nextInt(max) + 1;
-            int mod = Integer.parseInt(dMod.getValue().toString());
-            result.setText(Integer.toString(resultint));
-            historyBox.appendText(damount.getValue().toString()
-                    + " X " + dtype.getValue().toString() + " = " + resultint + "\n");
-            historyBox.appendText("Modifier = " + mod + "\n");
-            int total = resultint + mod;
-            historyBox.appendText("Total = " + total + "\n \n");
+            historyBox.appendText("------");
+            roll();
+            historyBox.appendText("------");
+            historyBox.appendText("\n");
+            
 
         } else if (advantage.isSelected()) {
-            String maxString = dtype.getValue().toString();
-            maxString = maxString.substring(1);
-            int max = Integer.parseInt(maxString);
-            max = max * Integer.parseInt(damount.getValue().toString());
-            int mod = Integer.parseInt(dMod.getValue().toString());
+            String mod = dMod.getValue().toString();
             historyBox.appendText("Rolling with ADV! \n");
             historyBox.appendText("Modifier = " + mod + "\n");
-            //first roll
-            int resultint = rand.nextInt(max) + 1;
-            historyBox.appendText(damount.getValue().toString()
-                    + " X " + dtype.getValue().toString() + " = " + resultint + "\n");
-            int total = resultint + mod;
-            historyBox.appendText("Total = " + total + "\n");
-            //second roll
-            int resultint2 = rand.nextInt(max);
-            historyBox.appendText(damount.getValue().toString()
-                    + " X " + dtype.getValue().toString() + " = " + resultint2 + "\n");
-            int total2 = resultint2 + mod;
-            historyBox.appendText("Total = " + total2 + "\n");
-            //report
-            if (total > total2) {
-                historyBox.appendText("First wins with: " + total + "\n \n");
+            int firstroll = roll();
+            int secondroll = roll();
+            //reports
+            if (firstroll > secondroll) {
+                historyBox.appendText("First wins with: " +firstroll+ "\n \n");
             } else {
-                historyBox.appendText("Second wins with: " + total2 + "\n \n");
+                historyBox.appendText("Second wins with: " +secondroll+ "\n \n");
             }
         } else if (disadvantage.isSelected()) {
-            String maxString = dtype.getValue().toString();
-            maxString = maxString.substring(1);
-            int max = Integer.parseInt(maxString);
-            max = max * Integer.parseInt(damount.getValue().toString());
-            int mod = Integer.parseInt(dMod.getValue().toString());
+           
+            String mod = dMod.getValue().toString();
             historyBox.appendText("Rolling with DADV! \n");
             historyBox.appendText("Modifier = " + mod + "\n");
-            //first roll
-            int resultint = rand.nextInt(max) + 1;
-            historyBox.appendText(damount.getValue().toString()
-                    + " X " + dtype.getValue().toString() + " = " + resultint + "\n");
-            int total = resultint + mod;
-            historyBox.appendText("Total = " + total + "\n");
-            //second roll
-            int resultint2 = rand.nextInt(max);
-            historyBox.appendText(damount.getValue().toString()
-                    + " X " + dtype.getValue().toString() + " = " + resultint2 + "\n");
-            int total2 = resultint2 + mod;
-            historyBox.appendText("Total = " + total2 + "\n");
+            int firstroll = roll();
+            int secondroll = roll();    
             //report
-            if (total < total2) {
-                historyBox.appendText("First wins with: " + total + "\n \n");
+            if (firstroll < secondroll) {
+                historyBox.appendText("First wins with: " +firstroll+ "\n \n");
             } else {
-                historyBox.appendText("Second wins with: " + total2 + "\n \n");
+                historyBox.appendText("Second wins with: " +secondroll+ "\n \n");
             }
         }
 
+    }
+
+    public int roll() {
+        int roll;
+        int result;
+        // Pull info from UI
+        String maxString = dtype.getValue().toString();
+        String dAmount = damount.getValue().toString();
+        //Clean maxString and make strings ints
+        int mod = Integer.parseInt(dMod.getValue().toString());
+        maxString = maxString.substring(1);
+        int max = Integer.parseInt(maxString) * Integer.parseInt(dAmount);
+        roll = rand.nextInt(max);
+        //Append to report Box
+        historyBox.appendText(dAmount + " X " + maxString + " = " + roll + "\n");
+        historyBox.appendText("Modifier = " + mod + "\n");
+        int total = roll + mod;
+        historyBox.appendText("Total = " + total + "\n");
+        return total;
     }
 
     @Override
